@@ -1,0 +1,19 @@
+<h2>Audience Registration</h2>
+<form (ngSubmit)="registerAudience()">
+  <label>Full Name:</label>
+  <input type="text" [(ngModel)]="audience.fullName" name="fullName" required />
+
+  <label>Email:</label>
+  <input type="email" [(ngModel)]="audience.email" name="email" required />
+
+  <label>Phone:</label>
+  <input type="text" [(ngModel)]="audience.phone" name="phone" required />
+
+  <label>Organization:</label>
+  <input type="text" [(ngModel)]="audience.organization" name="organization" />
+
+  <label>Role:</label>
+  <input type="text" [(ngModel)]="audience.role" name="role" />
+
+  <button type="submit">Register</button>
+</form>
