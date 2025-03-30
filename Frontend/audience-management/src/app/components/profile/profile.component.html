@@ -1,0 +1,27 @@
+<div class="profile-container">
+  <h2>Profile</h2>
+  <form [formGroup]="profileForm" (ngSubmit)="profileSubmit()">
+    <div>
+      <input placeholder="Enter your name" type="text" formControlName="full_name" />
+      <div class="error" *ngIf="profileForm.get('full_name')?.invalid && profileForm.get('full_name')?.touched">
+        Name must be at least 3 characters.
+      </div>
+    </div>
+
+    <div>
+      <input placeholder="Enter your phone" type="text" formControlName="phone_no" />
+      <div class="error" *ngIf="profileForm.get('phone_no')?.invalid && profileForm.get('phone_no')?.touched">
+        Phone must be 10 digits.
+      </div>
+    </div>
+
+    <div>
+      <input type="text" placeholder="Enter your affiliation" formControlName="affilation" />
+      <div class="error" *ngIf="profileForm.get('affilation')?.invalid && profileForm.get('affilation')?.touched">
+        Affiliation must be at least 3 characters.
+      </div>
+    </div>
+
+    <button type="submit">Update Profile</button>
+  </form>
+</div>

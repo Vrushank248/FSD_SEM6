@@ -19,8 +19,11 @@ public class Audience {
     @Column(name = "full_name")
     private String full_name;
 
-    @Column(name = "email_id")
-    private String email_id;
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "affilation")
     private String affilation;
@@ -47,14 +50,6 @@ public class Audience {
         this.full_name = full_name;
     }
 
-    public String getEmail_id() {
-        return email_id;
-    }
-
-    public void setEmail_id(String email_id) {
-        this.email_id = email_id;
-    }
-
     public String getAffilation() {
         return affilation;
     }
@@ -78,4 +73,21 @@ public class Audience {
     public void setConference_id(Long conference_id) {
         this.conference_id = conference_id;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }

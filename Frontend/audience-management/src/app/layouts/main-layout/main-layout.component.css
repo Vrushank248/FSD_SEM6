@@ -1,0 +1,51 @@
+/* filepath: c:\Users\karan\Desktop\Coding\practice\FSD\FSD_SEM6\Frontend\audience-management\src\app\layouts\main-layout\main-layout.component.css */
+
+.login-component {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.nav-buttons h2 {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.nav-buttons a,
+.nav-buttons button {
+  margin-left: 10px;
+  text-decoration: none;
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-buttons button:hover,
+.nav-buttons a:hover {
+  background-color: #eaeaea;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-top: 1px solid #ddd;
+}

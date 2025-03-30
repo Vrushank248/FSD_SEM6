@@ -1,23 +1,49 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // ✅ Import FormsModule
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service'; // ✅ Import AuthService
+import { passwordMatchValidator } from '../../utils/passwordValidators';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  standalone: true, // ✅ Ensure standalone is enabled
-  imports: [FormsModule], // ✅ Use FormsModule instead of NgModel
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  audience = {
-    fullName: '',
-    email: '',
-    phone: '',
-    organization: '',
-    role: ''
-  };
+  registerForm: FormGroup;
+
+  constructor(private router: Router, private formBuilder: FormBuilder, private authService: AuthService) {
+    this.registerForm = this.formBuilder.group(
+      {
+        full_name: ['', [Validators.required, Validators.minLength(3)]],
+        email: ['', [Validators.required, Validators.email]], // ✅ Ensure field names match backend
+        phone_no: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+        affilation: ['', [Validators.required, Validators.minLength(2)]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirm_password: ['', [Validators.required, Validators.minLength(6)]]
+      },
+      { validators: passwordMatchValidator }
+    );
+  }
 
   registerAudience() {
-    console.log('Audience Registered:', this.audience);
+    if (this.registerForm.valid) {
+      this.authService.register(this.registerForm.value).subscribe({
+        next: (response) => {
+          console.log('Success:', response);
+          alert('Registered successfully');
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.error("Registration failed:", error);
+          alert("Registration failed. Try again.");
+        }
+      });
+    } else {
+      alert("Some fields are invalid!");
+    }
   }
 }

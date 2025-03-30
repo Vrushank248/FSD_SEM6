@@ -1,19 +1,40 @@
-<h2>Audience Registration</h2>
-<form (ngSubmit)="registerAudience()">
-  <label>Full Name:</label>
-  <input type="text" [(ngModel)]="audience.fullName" name="fullName" required />
+<div class="register-content">
+  <h2>Register</h2>
+  <form (ngSubmit)="registerAudience()" [formGroup]="registerForm">
 
-  <label>Email:</label>
-  <input type="email" [(ngModel)]="audience.email" name="email" required />
+    <input placeholder="Full name" type="text" formControlName="full_name" required />
+    <div class="error" *ngIf="registerForm.get('full_name')?.invalid && registerForm.get('full_name')?.touched">
+      Name is required (min 3 characters)
+    </div>
 
-  <label>Phone:</label>
-  <input type="text" [(ngModel)]="audience.phone" name="phone" required />
+    <input placeholder="email@gmail.com" type="email" formControlName="email" required />
+    <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+      Email is required and must be valid
+    </div>
 
-  <label>Organization:</label>
-  <input type="text" [(ngModel)]="audience.organization" name="organization" />
+    <input placeholder="Enter your password" type="password" formControlName="password" required />
+    <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+      Password must be at least 6 characters
+    </div>
 
-  <label>Role:</label>
-  <input type="text" [(ngModel)]="audience.role" name="role" />
+    <input placeholder="Confirm your password" type="password" formControlName="confirm_password" required />
+    <div class="error" *ngIf="registerForm.hasError('passwordMismatch')">
+      Passwords do not match
+    </div>
 
-  <button type="submit">Register</button>
-</form>
+    <input placeholder="Enter your phone no" type="text" formControlName="phone_no" required />
+    <div class="error" *ngIf="registerForm.get('phone_no')?.invalid && registerForm.get('phone_no')?.touched">
+      Phone number must be 10 digits
+    </div>
+
+    <input placeholder="Enter your organization" type="text" formControlName="affilation" required />
+    <div class="error" *ngIf="registerForm.get('affilation')?.invalid && registerForm.get('affilation')?.touched">
+      Affiliation is required
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
+  <div>
+    <a href="/">Already a user? Login</a>
+  </div>
+</div>
