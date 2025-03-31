@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true, // ✅ Mark as standalone
-  imports: [FormsModule, ReactiveFormsModule, CommonModule], // ✅ Import required modules
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -29,7 +29,14 @@ export class LoginComponent {
       this.authService.login(email, password).subscribe({
         next: (response) => {
           console.log(response)
-          localStorage.setItem('token', response.token);
+          const user = {
+            full_name: response?.full_name,
+            audience_id: response?.audience_id,
+            phone_no:response?.phone_no,
+            email:response?.email,
+            conference_id:response?.conference_id
+          }
+          localStorage.setItem('user', JSON.stringify(user));
           alert('Login successful!');
           this.router.navigate(['/dashboard']);
         },

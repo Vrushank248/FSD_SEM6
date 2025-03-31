@@ -5,10 +5,10 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-profile',
-  standalone: true, // ✅ Mark as standalone
-  imports: [FormsModule, ReactiveFormsModule,CommonModule], // ✅ Import required modules
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule,CommonModule],
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'] // ✅ Corrected `styleUrls`
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
   profileForm: FormGroup;
@@ -22,25 +22,40 @@ export class ProfileComponent {
   }
 
   profileSubmit() {
-  const userIdString = localStorage.getItem("token");
-  const userId = userIdString ? parseInt(userIdString, 10) : null;
-  if (userId === null || isNaN(userId)) {
-    alert("Invalid user ID. Please log in again.");
-    return;
-  }
-  if (this.profileForm.valid) {
-    this.authService.updateProfile(userId, this.profileForm.value).subscribe({
-      next: (response) => {
-          console.log('Profile updated:', response);
-          alert('Profile updated successfully');
-        },
-        error: (error) => {
-          console.error("Update failed:", error);
-          alert("Failed to update profile. Try again.");
-        }
-      });
-    } else {
-      alert("Please fill all fields correctly.");
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userId = user?.audience_id;
+
+    if (!userId) {
+      alert("Invalid user ID. Please log in again.");
+      return;
     }
+
+    const updatedData: any = {};
+
+    Object.keys(this.profileForm.controls).forEach((key) => {
+      const control = this.profileForm.get(key);
+      if (control?.value && control.value !== user[key]) {
+        updatedData[key] = control.value;
+      }
+    });
+
+    if (Object.keys(updatedData).length === 0) {
+      alert("Please update at least one field.");
+      return;
+    }
+
+    this.authService.updateProfile(userId, updatedData).subscribe({
+      next: (response) => {
+        console.log("Profile updated:", response);
+        const updatedUser = { ...user, ...updatedData };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        alert("Profile updated successfully");
+      },
+      error: (error) => {
+        console.error("Update failed:", error);
+        alert("Failed to update profile. Try again.");
+      },
+    });
   }
+
 }

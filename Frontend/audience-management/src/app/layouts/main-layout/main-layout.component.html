@@ -1,6 +1,9 @@
 <div class="login-component">
   <div class="nav-buttons">
     <h2>Paper conference</h2>
+    <div class="user-details">
+      <span>Welcome, {{ user.full_name || 'Guest' }}</span>
+    </div>
     <button (click)="handleLogout()">Logout</button>
     <button (click)="profile()">Profile</button>
   </div>

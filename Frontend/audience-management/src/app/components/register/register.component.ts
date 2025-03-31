@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // ✅ Import AuthService
+import { AuthService } from '../../services/auth.service';
 import { passwordMatchValidator } from '../../utils/passwordValidators';
 import { CommonModule } from '@angular/common';
 
@@ -19,7 +19,7 @@ export class RegisterComponent {
     this.registerForm = this.formBuilder.group(
       {
         full_name: ['', [Validators.required, Validators.minLength(3)]],
-        email: ['', [Validators.required, Validators.email]], // ✅ Ensure field names match backend
+        email: ['', [Validators.required, Validators.email]],
         phone_no: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
         affilation: ['', [Validators.required, Validators.minLength(2)]],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -35,7 +35,7 @@ export class RegisterComponent {
         next: (response) => {
           console.log('Success:', response);
           alert('Registered successfully');
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/']);
         },
         error: (error) => {
           console.error("Registration failed:", error);
